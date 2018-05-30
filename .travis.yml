@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+    - "8"
+
+cache:
+    yarn: true
+    directories: 
+        - node_modules
+
+before_deploy:
+    - "yarn build"
+
+deploy:
+  provider: firebase
+  token:
+    secure: "zJxV2+OTTS8VI5mBe+1x+SH8goHxOBczUI1S4dvAjC+09yG8CozrdgoAm+0f/3w2hf+8eaVwDCL97D+SPUzWrlrh6VVwa+R+5nkTHpUsQJeKeQsKx0IiZvGiTbzDRSOdoqtK18V/278NaH9NsaY0Tc4jwdH0lwofxlxYP6Z7uA6qfXNDyiN3AWkDvCfcfS3djCZHrw0VenVBMQsVmLkJEgQBEMmwCfxQ0dcwTSM3Z/VMD7rdTMi6b5KECuih5QKyDtcmUiYfTB5mKeU8O+q10fz/UwKQHum6c97OftqB9cDBV9PbvS4O+Ya5X3E94ky+h7oD8hRWgRTeJUYNJq2qQFZFngnKz8qqfes9LuM3VbeT/M4b+0up5QhJztpY6s5kLPi6X/W3RoRMjiG++CZs1WYxmyY5EnDKEVUBbRjd3JWxNUwgiION4vhxDoATPAYNMQCoqKyUX8zMfuOwVJJjR3/aazv3FqXjF1kgmvmZh4BLo+gGcW02t3vFcsvDhnxtw90mlxsG4E4TRB3OcKcOBdBguYqYYrwy74F6eBW+5qFvQHCD4gRhQgX5oTjXG6Kb7nY00E6YmH8Yq6xf30u0qtZv5tybm2aYF3tJEXHO34PcJjuDdStMzEZnv/fC6n2/Nr0Yn13dEuaImBFUupL8KfnU4XvhwSiCGe197tiV6l4="
+  skip_cleanup: true
+  message: "deploy from travis"
