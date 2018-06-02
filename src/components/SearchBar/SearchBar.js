@@ -8,7 +8,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SearchIcon from '@material-ui/icons/Search';
 
-// TODO: Support Enter keypress
+/**
+ * Search bar
+ *
+ * TODO: Support Enter keypress
+ */
 class AppSearch extends Component {
   render() {
     const { classes } = this.props;
@@ -35,9 +39,24 @@ class AppSearch extends Component {
 }
 
 AppSearch.propTypes = {
+  /**
+   * Class names object to override or extend style
+   */
   classes: PropTypes.object.isRequired,
+
+  /**
+   * Search query changed handler function
+   */
   handleQueryChange: PropTypes.func.isRequired,
+
+  /**
+   * Search button clicked handler function
+   */
   handleSearchClick: PropTypes.func.isRequired,
+
+  /**
+   * Query string used for searching
+   */
   query: PropTypes.string,
 };
 

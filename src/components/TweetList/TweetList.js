@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import TwitterCard from '../TwitterCard/TwitterCard';
+import TweetCard from '../TweetCard/TweetCard';
 
+/**
+ * Container for tweets
+ */
 class TweetList extends Component {
   renderTweet(tweet) {
-    return <TwitterCard key={tweet.id_str} tweet={tweet} />;
+    return <TweetCard key={tweet.id_str} tweet={tweet} />;
   }
 
   render() {
@@ -27,7 +30,14 @@ class TweetList extends Component {
 }
 
 TweetList.propTypes = {
+  /**
+   * Class names object to override or extend style
+   */
   classes: PropTypes.object.isRequired,
+
+  /**
+   * An array of tweet objects
+   */
   tweets: PropTypes.array,
 };
 

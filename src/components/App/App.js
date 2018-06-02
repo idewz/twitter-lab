@@ -1,18 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { withStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
 import yellow from '@material-ui/core/colors/yellow';
 
-import './App.css';
-import AppSearchBar from './AppSearchBar';
+import SearchBar from '../SearchBar';
 import Twitter from '../../lib/Twitter';
 import TweetList from '../TweetList/TweetList';
 
+/**
+ * Main component for our app
+ */
 class App extends Component {
   constructor() {
     super();
@@ -49,7 +51,7 @@ class App extends Component {
               </Typography>
             </Grid>
             <Grid item>
-              <AppSearchBar
+              <SearchBar
                 handleQueryChange={this.handleQueryChange}
                 handleSearchClick={this.handleSearchClick}
                 query={this.state.query}
@@ -63,6 +65,13 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  /**
+   * Class names object to override or extend style
+   */
+  classes: PropTypes.object.isRequired,
+};
+
 const styles = {
   appBar: {
     background: yellow[500],
@@ -70,10 +79,6 @@ const styles = {
   toolbar: {
     justifyContent: 'space-between',
   },
-};
-
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(App);

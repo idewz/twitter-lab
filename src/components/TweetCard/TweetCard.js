@@ -15,6 +15,10 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
+/**
+ * Tweet card showing basic tweet information including
+ * text, user name, time, retweet and favorite counts.
+ */
 class TwitterCard extends Component {
   render() {
     const { classes, tweet } = this.props;
@@ -55,7 +59,16 @@ class TwitterCard extends Component {
 }
 
 TwitterCard.propTypes = {
+  /**
+   * Class names object to override or extend style
+   */
   classes: PropTypes.object.isRequired,
+
+  /**
+   * Tweet object
+   *
+   * <https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/intro-to-tweet-json>
+   */
   tweet: PropTypes.shape({
     created_at: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
