@@ -11,6 +11,7 @@ import yellow from '@material-ui/core/colors/yellow';
 import './App.css';
 import AppSearchBar from './AppSearchBar';
 import Twitter from '../../lib/Twitter';
+import TweetList from '../TweetList/TweetList';
 
 class App extends Component {
   constructor() {
@@ -35,15 +36,6 @@ class App extends Component {
     this.setState({ result: response });
   }
 
-  renderResult() {
-    const statuses = this.state.result.statuses;
-    if (statuses === undefined || statuses.length === 0) {
-      return null;
-    }
-
-    return <ol>{statuses.map(s => <li>{s.text}</li>)}</ol>;
-  }
-
   render() {
     const { classes } = this.props;
 
@@ -65,7 +57,7 @@ class App extends Component {
             </Grid>
           </Toolbar>
         </AppBar>
-        {this.renderResult()}
+        <TweetList tweets={this.state.result.statuses} />
       </Fragment>
     );
   }
