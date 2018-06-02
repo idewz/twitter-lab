@@ -2,6 +2,10 @@ language: node_js
 node_js:
     - "8"
 
+install:
+    - npm install -g typescript
+    - npm install -g tslint
+
 cache:
     yarn: true
     directories: 
@@ -11,8 +15,8 @@ before_deploy:
     - "yarn build"
 
 deploy:
-  provider: firebase
-  token:
-    secure: "u1g2hstBlsXFOOODlb798RPrR7W9o1ZcFt9Qvn8bVE7B1ijQYZUZ4KzO3JORiNvgJ/kJCWaIDdHznRLSUolCLpRTRJWF/gh53VEZvkm+ZayJYCMa1sPOZiRMd2SMrVrvwT9jngfUcym0/L2pXddaoMlpvqZSOvhkslj0ak0S3ogNHoY6Ts005GWVCChtAKNnhTFsIL2hzPuVLaNabMl3r9Lwk39juGHq+evj/h1tr8hojgdQFzFAKaUVdV5EbfU3/pv45tq+T0mLwGY01WBfw3ihi/i8gcz2Dz3T/I6+q0EPVcVdgBxdVxeISv0Mzxbnwn9xFewNunkrTDbx8gZjbWgSLWg7XPKTCmlh30wZa0wwtcJR7iTBEc2mT3pFjlq7UDQdefCzB5XPQVPJPRq+CHzfKkAPV9E5ik6tsdSeEsTcQdhNpuVKUVKM9DfLORc4GsAgTSS8Vi5PgoDI/kfDqtro56CvB6diim29D1blO4PdpdvxsGzc1OwLaRyAuKZVs1PESoWEJWBmTnlOcRmNwCBDTQciUoMeV4lqGgQ29hDBq1ySuJvRxy+ov5Iq2ulid5qvVrixHql3PKMIpx6QkueYKe2Hbboo+YJ3Bd5aRCbvDm9Gp6igok/tple+ci4QrwsU8n9i7ta9F3G6AVlLB693k5HvkCcnVBEXKj0m0Fg="
-  skip_cleanup: true
-  message: "deploy from travis"
+    provider: firebase
+    token:
+        secure: "u1g2hstBlsXFOOODlb798RPrR7W9o1ZcFt9Qvn8bVE7B1ijQYZUZ4KzO3JORiNvgJ/kJCWaIDdHznRLSUolCLpRTRJWF/gh53VEZvkm+ZayJYCMa1sPOZiRMd2SMrVrvwT9jngfUcym0/L2pXddaoMlpvqZSOvhkslj0ak0S3ogNHoY6Ts005GWVCChtAKNnhTFsIL2hzPuVLaNabMl3r9Lwk39juGHq+evj/h1tr8hojgdQFzFAKaUVdV5EbfU3/pv45tq+T0mLwGY01WBfw3ihi/i8gcz2Dz3T/I6+q0EPVcVdgBxdVxeISv0Mzxbnwn9xFewNunkrTDbx8gZjbWgSLWg7XPKTCmlh30wZa0wwtcJR7iTBEc2mT3pFjlq7UDQdefCzB5XPQVPJPRq+CHzfKkAPV9E5ik6tsdSeEsTcQdhNpuVKUVKM9DfLORc4GsAgTSS8Vi5PgoDI/kfDqtro56CvB6diim29D1blO4PdpdvxsGzc1OwLaRyAuKZVs1PESoWEJWBmTnlOcRmNwCBDTQciUoMeV4lqGgQ29hDBq1ySuJvRxy+ov5Iq2ulid5qvVrixHql3PKMIpx6QkueYKe2Hbboo+YJ3Bd5aRCbvDm9Gp6igok/tple+ci4QrwsU8n9i7ta9F3G6AVlLB693k5HvkCcnVBEXKj0m0Fg="
+    skip_cleanup: true
+    message: "deploy from travis"
