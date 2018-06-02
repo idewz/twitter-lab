@@ -10,10 +10,20 @@ import SearchIcon from '@material-ui/icons/Search';
 
 /**
  * Search bar
- *
- * TODO: Support Enter keypress
  */
 class AppSearch extends Component {
+  constructor() {
+    super();
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      this.props.handleSearchClick();
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -23,6 +33,7 @@ class AppSearch extends Component {
           placeholder="Search"
           className={classes.search}
           value={this.props.query}
+          onKeyDown={this.handleKeyDown}
           onChange={this.props.handleQueryChange}
           endAdornment={
             <IconButton
