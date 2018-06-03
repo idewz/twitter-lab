@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core';
+import { withStyles, Hidden } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -48,7 +48,6 @@ class App extends Component {
     }
     const keywords = this.state.query.split(' ');
     const query = keywords.join(' OR ');
-
     const response = await Twitter.search(query, this.state.count);
     this.setState({ result: response });
   }
@@ -65,11 +64,13 @@ class App extends Component {
       <Fragment>
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
-            <Grid item>
-              <Typography variant="title" color="inherit">
-                Twitter Content Lab
-              </Typography>
-            </Grid>
+            <Hidden xsDown>
+              <Grid item>
+                <Typography variant="title" color="inherit">
+                  Tweety
+                </Typography>
+              </Grid>
+            </Hidden>
             <Grid item>
               <SearchBar
                 count={this.state.count}

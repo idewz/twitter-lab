@@ -126,7 +126,7 @@ class TwitterCard extends Component {
     const { classes, tweet } = this.props;
 
     return (
-      <Grid item xs={12} md={6} lg={4} xl={3} className={classes.gridItem}>
+      <Grid item xs={12} sm={6} md={4} xl={3} className={classes.gridItem}>
         <Card className={classes.card}>
           {(this.isRetweet || this.isQuote) && (
             <Typography variant="caption" className={classes.retweet}>
@@ -198,7 +198,7 @@ const styles = theme => ({
   },
   card: {
     borderRadius: 16,
-    maxWidth: 400,
+    maxWidth: 372,
     minHeight: 160,
   },
   cardContent: {

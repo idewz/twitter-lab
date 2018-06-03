@@ -51,7 +51,7 @@ class TweetList extends Component {
     }
 
     return (
-      <Grid container spacing={40} className={classes.container}>
+      <Grid container spacing={16} className={classes.container}>
         {tweets.map(this.renderTweet)}
       </Grid>
     );
@@ -80,10 +80,11 @@ TweetList.defaultProps = {
   tweets: [],
 };
 
-const styles = {
+const styles = theme => ({
   container: {
-    margin: '0 auto',
+    marginTop: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit,
   },
-};
+});
 
 export default withStyles(styles)(TweetList);
