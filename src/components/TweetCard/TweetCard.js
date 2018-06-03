@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -8,8 +9,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+
+import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
+import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -43,14 +47,22 @@ class TwitterCard extends Component {
             <Typography component="p">{tweet.text}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites" className={classes.iconButton} disabled>
-              <FavoriteIcon className={classes.icon} />
-            </IconButton>
-            {tweet.favorite_count}
-            <IconButton aria-label="Retweet" className={classes.iconButton} disabled>
-              <RepeatIcon className={classes.icon} />
-            </IconButton>
-            {tweet.retweet_count}
+            <Grid item xs={1}>
+              <FavoriteIcon className={classNames(classes.icon, 'pink')} titleAccess="Favorites" />
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="body1" align="left" classes={{ root: classes.number }}>
+                {tweet.favorite_count}
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <RepeatIcon className={classNames(classes.icon, 'green')} titleAccess="Retweets" />
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="body1" align="left" classes={{ root: classes.number }}>
+                {tweet.retweet_count.toLocaleString()}
+              </Typography>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>
@@ -78,6 +90,13 @@ TwitterCard.propTypes = {
 };
 
 const styles = theme => ({
+  actions: {
+    display: 'flex',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
   card: {
     borderRadius: 16,
     maxWidth: 400,
@@ -87,19 +106,20 @@ const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
   },
-  gridItem: {},
-  actions: {
-    display: 'flex',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  iconButton: {
-    width: 32,
-    height: 32,
-  },
   icon: {
-    fontSize: 16,
+    fontSize: 20,
+    verticalAlign: 'middle',
+
+    '&.pink': {
+      fill: pink[400],
+    },
+    '&.green': {
+      fill: green[400],
+    },
+  },
+  number: {
+    fontWeight: 'bold',
+    color: grey[800],
   },
 });
 
