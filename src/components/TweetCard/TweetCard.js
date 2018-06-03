@@ -62,6 +62,8 @@ class TwitterCard extends Component {
       if (current < text.length) {
         parts.push(text.slice(current));
       }
+    } else {
+      parts.push(text);
     }
 
     return parts;
