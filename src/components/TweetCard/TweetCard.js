@@ -27,6 +27,13 @@ import { DATE_FORMAT } from '../../lib/Twitter';
  * text, user name, time, retweet and favorite counts.
  */
 class TwitterCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.isRetweet = props.tweet.retweeted_status !== undefined;
+    this.isQuote = props.tweet.is_quote_status;
+  }
+
   formatDate(dateTime) {
     const created_at = moment(dateTime);
     const now = moment();
@@ -39,10 +46,35 @@ class TwitterCard extends Component {
     }
   }
 
+  getUser() {
+    const { tweet } = this.props;
+
+    return this.isRetweet ? tweet.retweeted_status.user : tweet.user;
+  }
+
+  getTweetText() {
+    const { tweet } = this.props;
+
+    return this.isRetweet ? tweet.retweeted_status.text : tweet.text;
+  }
+
+  renderAvatar() {
+    const { classes } = this.props;
+
+    return (
+      <Avatar
+        aria-label={this.getUser().name}
+        src={this.getUser().profile_image_url_https}
+        className={classes.avatar}
+      />
+    );
+  }
+
   renderDate() {
     const { classes, tweet } = this.props;
+    const created_at = this.isRetweet ? tweet.retweeted_status.created_at : tweet.created_at;
     const tweetUrl = `https://twitter.com/statuses/${tweet.id_str}`;
-    const formattedDate = this.formatDate(tweet.created_at);
+    const formattedDate = this.formatDate(created_at);
 
     return (
       <a href={tweetUrl} className={classes.subheader}>
@@ -57,19 +89,19 @@ class TwitterCard extends Component {
     return (
       <Grid item xs={12} md={6} lg={4} xl={3} className={classes.gridItem}>
         <Card className={classes.card}>
+          {(this.isRetweet || this.isQuote) && (
+            <Typography variant="caption" className={classes.retweet}>
+              {tweet.user.name} retweeted
+            </Typography>
+          )}
           <CardHeader
-            avatar={
-              <Avatar
-                aria-label={tweet.user.name}
-                src={tweet.user.profile_image_url_https}
-                className={classes.avatar}
-              />
-            }
-            title={tweet.user.name}
+            avatar={this.renderAvatar()}
+            title={this.getUser().name}
             subheader={this.renderDate()}
+            className={classes.cardHeader}
           />
           <CardContent className={classes.cardContent}>
-            <Typography component="p">{tweet.text}</Typography>
+            <Typography component="p">{this.getTweetText()}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             <Grid item xs={1}>
@@ -131,6 +163,10 @@ const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
   },
+  cardHeader: {
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+  },
   icon: {
     fontSize: 20,
     verticalAlign: 'middle',
@@ -145,6 +181,9 @@ const styles = theme => ({
   number: {
     fontWeight: 'bold',
     color: grey[800],
+  },
+  retweet: {
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px 0`,
   },
   subheader: {
     textDecoration: 'none',
