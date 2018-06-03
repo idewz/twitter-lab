@@ -13,7 +13,7 @@ class Twitter {
    */
   static async search(query, count) {
     const params = {
-      q: encodeURIComponent(query),
+      q: query,
       count,
       include_entities: true,
     };

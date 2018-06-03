@@ -46,8 +46,10 @@ class App extends Component {
     if (this.state.query === '') {
       return;
     }
+    const keywords = this.state.query.split(' ');
+    const query = keywords.join(' OR ');
 
-    const response = await Twitter.search(this.state.query, this.state.count);
+    const response = await Twitter.search(query, this.state.count);
     this.setState({ result: response });
   }
 
