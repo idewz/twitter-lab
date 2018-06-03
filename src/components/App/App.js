@@ -23,11 +23,13 @@ class App extends Component {
       count: 20,
       query: '',
       result: {},
+      sort: 'Retweet',
     };
 
     this.handleCountChange = this.handleCountChange.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
   }
 
   handleCountChange(event) {
@@ -43,6 +45,12 @@ class App extends Component {
   async handleSearchClick() {
     const response = await Twitter.search(this.state.query, this.state.count);
     this.setState({ result: response });
+  }
+
+  handleSortChange(event) {
+    const sort = event.target.value;
+    console.log(sort);
+    this.setState({ sort });
   }
 
   render() {
@@ -63,12 +71,14 @@ class App extends Component {
                 handleCountChange={this.handleCountChange}
                 handleQueryChange={this.handleQueryChange}
                 handleSearchClick={this.handleSearchClick}
+                handleSortChange={this.handleSortChange}
                 query={this.state.query}
+                sort={this.state.sort}
               />
             </Grid>
           </Toolbar>
         </AppBar>
-        <TweetList tweets={this.state.result.statuses} />
+        <TweetList tweets={this.state.result.statuses} sort={this.state.sort} />
       </Fragment>
     );
   }

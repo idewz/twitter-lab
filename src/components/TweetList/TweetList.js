@@ -10,6 +10,15 @@ import TweetCard from '../TweetCard/TweetCard';
  * Container for tweets
  */
 class TweetList extends Component {
+  getSortField(sort) {
+    const sortMap = {
+      Retweet: 'retweet_count',
+      Favorite: 'favorite_count',
+    };
+
+    return sortMap[sort];
+  }
+
   renderTweet(tweet) {
     return <TweetCard key={tweet.id_str} tweet={tweet} />;
   }
@@ -19,6 +28,12 @@ class TweetList extends Component {
 
     if (tweets === undefined || tweets.length === 0) {
       return null;
+    }
+
+    const sortField = this.getSortField(this.props.sort);
+
+    if (sortField !== undefined) {
+      tweets.sort((a, b) => b[sortField] - a[sortField]);
     }
 
     return (
@@ -36,12 +51,18 @@ TweetList.propTypes = {
   classes: PropTypes.object.isRequired,
 
   /**
+   * Sort option
+   */
+  sort: PropTypes.string,
+
+  /**
    * An array of tweet objects
    */
   tweets: PropTypes.array,
 };
 
 TweetList.defaultProps = {
+  sort: 'Retweet',
   tweets: [],
 };
 

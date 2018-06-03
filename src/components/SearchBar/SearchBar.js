@@ -15,12 +15,16 @@ class AppSearch extends Component {
   constructor() {
     super();
 
+    this.countOptions = [20, 50, 100];
+    this.sortOptions = ['Retweet', 'Favorite'];
+
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   handleKeyDown(event) {
     if (event.key === 'Enter') {
       this.props.handleSearchClick();
+      event.preventDefault();
     }
   }
 
@@ -30,6 +34,7 @@ class AppSearch extends Component {
     return (
       <form className={classes.form} noValidate autoComplete="off">
         <Input
+          id="search-box"
           placeholder="Search"
           className={classes.search}
           value={this.props.query}
@@ -45,21 +50,32 @@ class AppSearch extends Component {
           }
         />
         <TextField
-          id="select-currency-native"
+          id="select-count"
           select
           label="# of tweets"
-          classes={{ root: classes.textField }}
           value={this.props.count}
+          classes={{ root: classes.textField }}
           onChange={this.props.handleCountChange}
-          SelectProps={{
-            native: true,
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
+          SelectProps={{ native: true }}
           margin="normal"
         >
-          {[20, 50, 100].map(option => (
+          {this.countOptions.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </TextField>
+        <TextField
+          id="select-sort"
+          select
+          label="Sort by"
+          classes={{ root: classes.textField }}
+          value={this.props.sort}
+          onChange={this.props.handleSortChange}
+          SelectProps={{ native: true }}
+          margin="normal"
+        >
+          {this.sortOptions.map(option => (
             <option key={option} value={option}>
               {option}
             </option>
@@ -82,7 +98,7 @@ AppSearch.propTypes = {
   count: PropTypes.number,
 
   /**
-   * Count changed handler function
+   * Count option changed handler function
    */
   handleCountChange: PropTypes.func.isRequired,
 
@@ -97,14 +113,25 @@ AppSearch.propTypes = {
   handleSearchClick: PropTypes.func.isRequired,
 
   /**
+   * Sort option changed handler function
+   */
+  handleSortChange: PropTypes.func.isRequired,
+
+  /**
    * Query string used for searching
    */
   query: PropTypes.string,
+
+  /**
+   * Sort option
+   */
+  sort: PropTypes.string,
 };
 
 AppSearch.defaultProps = {
   count: 20,
   query: '',
+  sort: 'Retweet',
 };
 
 const styles = theme => ({
@@ -114,9 +141,9 @@ const styles = theme => ({
   },
   search: {
     marginTop: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
-    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit,
     font: 'inherit',
     whiteSpace: 'normal',
     background: 'none',
@@ -146,6 +173,10 @@ const styles = theme => ({
     },
   },
   textField: {
+    marginTop: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+    marginLeft: theme.spacing.unit,
     width: 100,
   },
 });
