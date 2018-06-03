@@ -64,8 +64,17 @@ class App extends Component {
     if (this.state.query === '') {
       return;
     }
-    const keywords = this.state.query.split(' ');
-    const query = keywords.join(' OR ');
+
+    let query = '';
+    const hashtagFound = this.state.query.indexOf('#') !== -1;
+
+    if (hashtagFound) {
+      const keywords = this.state.query.split(' ');
+      query = keywords.join(' OR ');
+    } else {
+      query = this.state.query;
+    }
+
     const response = await Twitter.search(query, this.state.count);
     this.setState({ result: response });
   }
