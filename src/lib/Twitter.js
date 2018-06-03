@@ -28,5 +28,7 @@ class Twitter {
   }
 }
 
+export const BASE_URL_HASHTAG = 'https://twitter.com/hashtag/';
+export const BASE_URL_STATUS = 'https://twitter.com/statuses/';
 export const DATE_FORMAT = 'H:mm A - D MMM YYYY'; // 6:05 AM - 29 May 2018
 export default Twitter;

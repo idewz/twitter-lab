@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
-import { DATE_FORMAT } from '../../lib/Twitter';
+import { BASE_URL_HASHTAG, BASE_URL_STATUS, DATE_FORMAT } from '../../lib/Twitter';
 
 /**
  * Tweet card showing basic tweet information including
@@ -46,16 +46,31 @@ class TwitterCard extends Component {
     }
   }
 
+  formatText(text, entities) {
+    const hashtags = entities.hashtags;
+    let parts = [];
+    let current = 0;
+
+    // decorate each tag with its link
+    if (hashtags !== undefined && hashtags.length !== 0) {
+      hashtags.forEach(tag => {
+        parts.push(text.slice(current, tag.indices[0]));
+        parts.push(this.renderHashTag(tag.text));
+        current = tag.indices[1];
+      });
+
+      if (current < text.length) {
+        parts.push(text.slice(current));
+      }
+    }
+
+    return parts;
+  }
+
   getUser() {
     const { tweet } = this.props;
 
     return this.isRetweet ? tweet.retweeted_status.user : tweet.user;
-  }
-
-  getTweetText() {
-    const { tweet } = this.props;
-
-    return this.isRetweet ? tweet.retweeted_status.text : tweet.text;
   }
 
   renderAvatar() {
@@ -73,7 +88,7 @@ class TwitterCard extends Component {
   renderDate() {
     const { classes, tweet } = this.props;
     const created_at = this.isRetweet ? tweet.retweeted_status.created_at : tweet.created_at;
-    const tweetUrl = `https://twitter.com/statuses/${tweet.id_str}`;
+    const tweetUrl = BASE_URL_STATUS + tweet.id_str;
     const formattedDate = this.formatDate(created_at);
 
     return (
@@ -81,6 +96,22 @@ class TwitterCard extends Component {
         {formattedDate}
       </a>
     );
+  }
+
+  renderHashTag(tag) {
+    return (
+      <a href={BASE_URL_HASHTAG + tag} className={this.props.classes.hashtag}>
+        #{tag}
+      </a>
+    );
+  }
+
+  renderText() {
+    const { tweet } = this.props;
+    const text = this.isRetweet ? tweet.retweeted_status.text : tweet.text;
+    const entities = this.isRetweet ? tweet.retweeted_status.entities : tweet.entities;
+
+    return this.formatText(text, entities).map((elem, i) => <Fragment key={i}>{elem}</Fragment>);
   }
 
   render() {
@@ -98,10 +129,10 @@ class TwitterCard extends Component {
             avatar={this.renderAvatar()}
             title={this.getUser().name}
             subheader={this.renderDate()}
-            className={classes.cardHeader}
+            classes={{ root: classes.cardHeader, title: classes.username }}
           />
           <CardContent className={classes.cardContent}>
-            <Typography component="p">{this.getTweetText()}</Typography>
+            <Typography component="p">{this.renderText()}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             <Grid item xs={1}>
@@ -167,6 +198,12 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
+  hashtag: {
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
   icon: {
     fontSize: 20,
     verticalAlign: 'middle',
@@ -191,6 +228,9 @@ const styles = theme => ({
     '&:hover': {
       textDecoration: 'underline',
     },
+  },
+  username: {
+    fontWeight: 'bold',
   },
 });
 
