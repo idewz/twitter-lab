@@ -15,6 +15,7 @@ class Twitter {
     const params = {
       q: encodeURIComponent(query),
       count,
+      include_entities: true,
     };
 
     try {

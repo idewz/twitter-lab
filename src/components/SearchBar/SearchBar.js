@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input/Input';
+import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -28,7 +28,7 @@ class AppSearch extends Component {
     const { classes } = this.props;
 
     return (
-      <FormControl>
+      <form className={classes.form} noValidate autoComplete="off">
         <Input
           placeholder="Search"
           className={classes.search}
@@ -44,7 +44,28 @@ class AppSearch extends Component {
             </IconButton>
           }
         />
-      </FormControl>
+        <TextField
+          id="select-currency-native"
+          select
+          label="# of tweets"
+          classes={{ root: classes.textField }}
+          value={this.props.count}
+          onChange={this.props.handleCountChange}
+          SelectProps={{
+            native: true,
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+        >
+          {[20, 50, 100].map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </TextField>
+      </form>
     );
   }
 }
@@ -54,6 +75,16 @@ AppSearch.propTypes = {
    * Class names object to override or extend style
    */
   classes: PropTypes.object.isRequired,
+
+  /**
+   * Number of tweets in search result
+   */
+  count: PropTypes.number,
+
+  /**
+   * Count changed handler function
+   */
+  handleCountChange: PropTypes.func.isRequired,
 
   /**
    * Search query changed handler function
@@ -72,12 +103,20 @@ AppSearch.propTypes = {
 };
 
 AppSearch.defaultProps = {
+  count: 20,
   query: '',
 };
 
 const styles = theme => ({
+  form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   search: {
-    margin: 0, // Reset for Safari
+    marginTop: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit,
+    marginRight: theme.spacing.unit * 2,
     font: 'inherit',
     whiteSpace: 'normal',
     background: 'none',
@@ -105,6 +144,9 @@ const styles = theme => ({
     '&:focus': {
       outline: 0,
     },
+  },
+  textField: {
+    width: 100,
   },
 });
 

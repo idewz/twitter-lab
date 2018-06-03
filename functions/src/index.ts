@@ -18,10 +18,13 @@ export const search = functions.https.onRequest((request, response) => {
       response.status(400).send('Missing q parameter');
       return;
     }
+
+    const { q, count, include_entities } = request.query;
     const url = '/search/tweets.json';
     const params = {
-      q: request.query.q,
-      count: request.query.count || DEFAULT_NUMBER_OF_TWEETS,
+      q,
+      count: count || DEFAULT_NUMBER_OF_TWEETS,
+      include_entities,
     };
 
     axios

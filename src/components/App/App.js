@@ -13,19 +13,26 @@ import Twitter from '../../lib/Twitter';
 import TweetList from '../TweetList/TweetList';
 
 /**
- * Main component for our app
+ * Main component for our
  */
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
+      count: 20,
       query: '',
       result: {},
     };
 
+    this.handleCountChange = this.handleCountChange.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
+  }
+
+  handleCountChange(event) {
+    const count = parseInt(event.target.value, 10);
+    this.setState({ count }, this.handleSearchClick);
   }
 
   handleQueryChange(event) {
@@ -34,7 +41,7 @@ class App extends Component {
   }
 
   async handleSearchClick() {
-    const response = await Twitter.search(this.state.query);
+    const response = await Twitter.search(this.state.query, this.state.count);
     this.setState({ result: response });
   }
 
@@ -52,6 +59,8 @@ class App extends Component {
             </Grid>
             <Grid item>
               <SearchBar
+                count={this.state.count}
+                handleCountChange={this.handleCountChange}
                 handleQueryChange={this.handleQueryChange}
                 handleSearchClick={this.handleSearchClick}
                 query={this.state.query}
