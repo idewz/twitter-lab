@@ -28,6 +28,7 @@ class TweetList extends Component {
     const sortMap = {
       Retweet: 'retweet_count',
       Favorite: 'favorite_count',
+      Date: 'id_str',
     };
 
     return sortMap[sort];

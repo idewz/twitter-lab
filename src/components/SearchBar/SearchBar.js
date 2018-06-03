@@ -16,7 +16,7 @@ class AppSearch extends Component {
     super();
 
     this.countOptions = [20, 50, 100];
-    this.sortOptions = ['Retweet', 'Favorite'];
+    this.sortOptions = ['Retweet', 'Favorite', 'Date'];
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
