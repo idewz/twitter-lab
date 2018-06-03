@@ -26,7 +26,7 @@ class TwitterCard extends Component {
     const date = new Date(tweet.created_at);
 
     return (
-      <Grid item xs={12} className={classes.gridItem}>
+      <Grid item xs={12} md={6} lg={4} xl={3} className={classes.gridItem}>
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -81,15 +81,13 @@ const styles = theme => ({
   card: {
     borderRadius: 16,
     maxWidth: 400,
-    maxHeight: 300,
+    minHeight: 160,
   },
   cardContent: {
     paddingTop: 0,
     paddingBottom: 0,
   },
-  gridItem: {
-    margin: 'auto',
-  },
+  gridItem: {},
   actions: {
     display: 'flex',
   },
