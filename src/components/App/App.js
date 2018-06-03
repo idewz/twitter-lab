@@ -66,7 +66,7 @@ class App extends Component {
           <Toolbar className={classes.toolbar}>
             <Hidden xsDown>
               <Grid item>
-                <Typography variant="title" color="inherit">
+                <Typography variant="title" color="inherit" className={classes.title}>
                   Tweety
                 </Typography>
               </Grid>
@@ -100,6 +100,9 @@ App.propTypes = {
 const styles = {
   appBar: {
     background: yellow[500],
+  },
+  title: {
+    fontWeight: 'bold',
   },
   toolbar: {
     justifyContent: 'space-between',
