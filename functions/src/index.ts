@@ -38,3 +38,23 @@ export const search = functions.https.onRequest((request, response) => {
       });
   });
 });
+
+/**
+ * Get global trends
+ */
+export const trends = functions.https.onRequest((request, response) => {
+  corsHandler(request, response, () => {
+    const url = '/trends/place.json';
+    const params = { id: 1 };
+
+    axios
+      .get(url, { params })
+      .then(twitterResponse => {
+        response.json(twitterResponse.data);
+      })
+      .catch(error => {
+        console.log(error);
+        response.status(500).json({ status: 500, message: 'Something went wrong' });
+      });
+  });
+});

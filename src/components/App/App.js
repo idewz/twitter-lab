@@ -32,6 +32,19 @@ class App extends Component {
     this.handleSortChange = this.handleSortChange.bind(this);
   }
 
+  async componentDidMount() {
+    const response = await Twitter.trends();
+    const trends = response[0].trends;
+    if (trends === undefined || trends.length === 0) {
+      return;
+    }
+
+    // Random a top trend
+    const randomIndex = Math.floor(Math.random() * trends.length * 0.25);
+    const trend = trends[randomIndex];
+    this.setState({ query: trend.name }, this.handleSearchClick);
+  }
+
   handleCountChange(event) {
     const count = parseInt(event.target.value, 10);
     this.setState({ count }, this.handleSearchClick);

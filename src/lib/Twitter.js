@@ -26,6 +26,22 @@ class Twitter {
       return {};
     }
   }
+
+  /**
+   * Get global trends
+   *
+   * @returns {array} Response array from /trends/place.json
+   * @see {@link https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place}
+   */
+  static async trends() {
+    try {
+      const response = await axios.get('https://twitter.siwadon.com/api/trends');
+      return response.data;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
 }
 
 export const BASE_URL_HASHTAG = 'https://twitter.com/hashtag/';

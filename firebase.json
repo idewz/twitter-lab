@@ -12,6 +12,10 @@
         "function": "search"
       },
       {
+        "source": "/api/trends",
+        "function": "trends"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
