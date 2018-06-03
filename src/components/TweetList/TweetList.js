@@ -10,6 +10,13 @@ import TweetCard from '../TweetCard/TweetCard';
  * Container for tweets
  */
 class TweetList extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const isSameTweets = nextProps.tweets === this.props.tweets;
+    const isSameSort = nextProps.sort === this.props.sort;
+
+    return !(isSameSort && isSameTweets);
+  }
+
   getSortField(sort) {
     const sortMap = {
       Retweet: 'retweet_count',

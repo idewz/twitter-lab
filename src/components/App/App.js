@@ -43,13 +43,16 @@ class App extends Component {
   }
 
   async handleSearchClick() {
+    if (this.state.query === '') {
+      return;
+    }
+
     const response = await Twitter.search(this.state.query, this.state.count);
     this.setState({ result: response });
   }
 
   handleSortChange(event) {
     const sort = event.target.value;
-    console.log(sort);
     this.setState({ sort });
   }
 
