@@ -28,8 +28,8 @@ class App extends Component {
 
     this.handleCountChange = this.handleCountChange.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
-    this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
+    this.performSearch = this.performSearch.bind(this);
   }
 
   async componentDidMount() {
@@ -47,12 +47,12 @@ class App extends Component {
     // Random a top trend
     const randomIndex = Math.floor(Math.random() * trends.length * 0.25);
     const trend = trends[randomIndex];
-    this.setState({ query: trend.name }, this.handleSearchClick);
+    this.setState({ query: trend.name }, this.performSearch);
   }
 
   handleCountChange(event) {
     const count = parseInt(event.target.value, 10);
-    this.setState({ count }, this.handleSearchClick);
+    this.setState({ count }, this.performSearch);
   }
 
   handleQueryChange(event) {
@@ -60,7 +60,7 @@ class App extends Component {
     this.setState({ query });
   }
 
-  async handleSearchClick() {
+  async performSearch() {
     if (this.state.query === '') {
       return;
     }
@@ -103,7 +103,7 @@ class App extends Component {
                 count={this.state.count}
                 handleCountChange={this.handleCountChange}
                 handleQueryChange={this.handleQueryChange}
-                handleSearchClick={this.handleSearchClick}
+                handleSearchClick={this.performSearch}
                 handleSortChange={this.handleSortChange}
                 query={this.state.query}
                 sort={this.state.sort}
