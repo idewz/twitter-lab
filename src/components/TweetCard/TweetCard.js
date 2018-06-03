@@ -32,6 +32,7 @@ class TwitterCard extends Component {
 
     this.isRetweet = props.tweet.retweeted_status !== undefined;
     this.isQuote = props.tweet.is_quote_status;
+    this.mainTweet = this.isRetweet ? props.tweet.retweeted_status : props.tweet;
   }
 
   formatDate(dateTime) {
@@ -70,9 +71,7 @@ class TwitterCard extends Component {
   }
 
   getUser() {
-    const { tweet } = this.props;
-
-    return this.isRetweet ? tweet.retweeted_status.user : tweet.user;
+    return this.mainTweet.user;
   }
 
   renderAvatar() {
@@ -88,9 +87,9 @@ class TwitterCard extends Component {
   }
 
   renderDate() {
-    const { classes, tweet } = this.props;
-    const created_at = this.isRetweet ? tweet.retweeted_status.created_at : tweet.created_at;
-    const tweetUrl = BASE_URL_STATUS + tweet.id_str;
+    const { classes } = this.props;
+    const created_at = this.mainTweet.created_at;
+    const tweetUrl = BASE_URL_STATUS + this.mainTweet.id_str;
     const formattedDate = this.formatDate(created_at);
 
     return (
@@ -98,6 +97,10 @@ class TwitterCard extends Component {
         {formattedDate}
       </a>
     );
+  }
+
+  renderFavoriteCount() {
+    return this.mainTweet.favorite_count.toLocaleString();
   }
 
   renderHashTag(tag) {
@@ -108,10 +111,13 @@ class TwitterCard extends Component {
     );
   }
 
+  renderRetweetCount() {
+    return this.mainTweet.retweet_count.toLocaleString();
+  }
+
   renderText() {
-    const { tweet } = this.props;
-    const text = this.isRetweet ? tweet.retweeted_status.text : tweet.text;
-    const entities = this.isRetweet ? tweet.retweeted_status.entities : tweet.entities;
+    const text = this.mainTweet.text;
+    const entities = this.mainTweet.entities;
 
     return this.formatText(text, entities).map((elem, i) => <Fragment key={i}>{elem}</Fragment>);
   }
@@ -127,22 +133,25 @@ class TwitterCard extends Component {
               {tweet.user.name} retweeted
             </Typography>
           )}
+
           <CardHeader
             avatar={this.renderAvatar()}
             title={this.getUser().name}
             subheader={this.renderDate()}
             classes={{ root: classes.cardHeader, title: classes.username }}
           />
+
           <CardContent className={classes.cardContent}>
             <Typography component="p">{this.renderText()}</Typography>
           </CardContent>
+
           <CardActions className={classes.actions} disableActionSpacing>
             <Grid item xs={1}>
               <FavoriteIcon className={classNames(classes.icon, 'pink')} titleAccess="Favorites" />
             </Grid>
             <Grid item xs={3}>
               <Typography variant="body1" align="left" classes={{ root: classes.number }}>
-                {tweet.favorite_count}
+                {this.renderFavoriteCount()}
               </Typography>
             </Grid>
             <Grid item xs={1}>
@@ -150,7 +159,7 @@ class TwitterCard extends Component {
             </Grid>
             <Grid item xs={3}>
               <Typography variant="body1" align="left" classes={{ root: classes.number }}>
-                {tweet.retweet_count.toLocaleString()}
+                {this.renderRetweetCount()}
               </Typography>
             </Grid>
           </CardActions>
@@ -176,7 +185,7 @@ TwitterCard.propTypes = {
     id: PropTypes.number.isRequired,
     id_str: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
 const styles = theme => ({

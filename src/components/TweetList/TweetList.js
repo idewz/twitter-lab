@@ -17,6 +17,13 @@ class TweetList extends Component {
     return !(isSameSort && isSameTweets);
   }
 
+  compareTweet(a, b, sortField) {
+    let aTweet = a.retweeted_status || a;
+    let bTweet = b.retweeted_status || b;
+
+    return bTweet[sortField] - aTweet[sortField];
+  }
+
   getSortField(sort) {
     const sortMap = {
       Retweet: 'retweet_count',
@@ -40,7 +47,7 @@ class TweetList extends Component {
     const sortField = this.getSortField(this.props.sort);
 
     if (sortField !== undefined) {
-      tweets.sort((a, b) => b[sortField] - a[sortField]);
+      tweets.sort((a, b) => this.compareTweet(a, b, sortField));
     }
 
     return (
