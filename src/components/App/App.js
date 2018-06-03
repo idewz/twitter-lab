@@ -33,8 +33,13 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    if (process.env.CI) {
+      return;
+    }
+
     const response = await Twitter.trends();
-    const trends = response[0].trends;
+    const trends = Array.isArray(response) ? response[0].trends : undefined;
+
     if (trends === undefined || trends.length === 0) {
       return;
     }
