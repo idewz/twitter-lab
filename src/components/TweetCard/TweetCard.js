@@ -74,6 +74,14 @@ class TwitterCard extends Component {
     return this.mainTweet.user;
   }
 
+  handleHashTagClick(e) {
+    e.stopPropagation();
+  }
+
+  openTweet(id) {
+    window.open(BASE_URL_STATUS + id);
+  }
+
   renderAvatar() {
     const { classes } = this.props;
 
@@ -105,7 +113,11 @@ class TwitterCard extends Component {
 
   renderHashTag(tag) {
     return (
-      <a href={BASE_URL_HASHTAG + tag} className={this.props.classes.hashtag}>
+      <a
+        href={BASE_URL_HASHTAG + tag}
+        className={this.props.classes.hashtag}
+        onClick={this.handleHashTagClick}
+      >
         #{tag}
       </a>
     );
@@ -141,7 +153,7 @@ class TwitterCard extends Component {
             classes={{ root: classes.cardHeader, title: classes.username }}
           />
 
-          <CardContent className={classes.cardContent}>
+          <CardContent className={classes.cardContent} onClick={() => this.openTweet(tweet.id_str)}>
             <Typography component="p">{this.renderText()}</Typography>
           </CardContent>
 
@@ -204,6 +216,7 @@ const styles = theme => ({
   cardContent: {
     paddingTop: 0,
     paddingBottom: 0,
+    cursor: 'pointer',
   },
   cardHeader: {
     paddingTop: theme.spacing.unit,
