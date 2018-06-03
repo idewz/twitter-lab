@@ -13,7 +13,7 @@ import Twitter from '../../lib/Twitter';
 import TweetList from '../TweetList/TweetList';
 
 /**
- * Main component for our
+ * Main component for our app
  */
 class App extends Component {
   constructor() {
