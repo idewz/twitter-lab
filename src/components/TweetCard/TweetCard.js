@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -19,15 +20,39 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
+import { DATE_FORMAT } from '../../lib/Twitter';
+
 /**
  * Tweet card showing basic tweet information including
  * text, user name, time, retweet and favorite counts.
  */
 class TwitterCard extends Component {
-  render() {
+  formatDate(dateTime) {
+    const created_at = moment(dateTime);
+    const now = moment();
+    const duration = moment.duration(now.diff(created_at));
+
+    if (duration.as('hours') < 24) {
+      return created_at.fromNow();
+    } else {
+      return created_at.format(DATE_FORMAT);
+    }
+  }
+
+  renderDate() {
     const { classes, tweet } = this.props;
     const tweetUrl = `https://twitter.com/statuses/${tweet.id_str}`;
-    const date = new Date(tweet.created_at);
+    const formattedDate = this.formatDate(tweet.created_at);
+
+    return (
+      <a href={tweetUrl} className={classes.subheader}>
+        {formattedDate}
+      </a>
+    );
+  }
+
+  render() {
+    const { classes, tweet } = this.props;
 
     return (
       <Grid item xs={12} md={6} lg={4} xl={3} className={classes.gridItem}>
@@ -41,7 +66,7 @@ class TwitterCard extends Component {
               />
             }
             title={tweet.user.name}
-            subheader={<a href={tweetUrl}>{date.toLocaleString()}</a>}
+            subheader={this.renderDate()}
           />
           <CardContent className={classes.cardContent}>
             <Typography component="p">{tweet.text}</Typography>
@@ -120,6 +145,13 @@ const styles = theme => ({
   number: {
     fontWeight: 'bold',
     color: grey[800],
+  },
+  subheader: {
+    textDecoration: 'none',
+    color: grey[800],
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 });
 

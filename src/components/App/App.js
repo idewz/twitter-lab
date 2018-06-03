@@ -32,11 +32,6 @@ class App extends Component {
     this.handleSortChange = this.handleSortChange.bind(this);
   }
 
-  componentDidMount() {
-    // TODO: remove this. added this for faster developement
-    this.setState({ query: '#tcas OR #ช้างศึก' }, this.handleSearchClick);
-  }
-
   handleCountChange(event) {
     const count = parseInt(event.target.value, 10);
     this.setState({ count }, this.handleSearchClick);

@@ -28,4 +28,5 @@ class Twitter {
   }
 }
 
+export const DATE_FORMAT = 'H:mm A - D MMM YYYY'; // 6:05 AM - 29 May 2018
 export default Twitter;
