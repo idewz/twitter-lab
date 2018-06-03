@@ -40,12 +40,11 @@ class TweetList extends Component {
 
   render() {
     const { classes, tweets } = this.props;
+    const sortField = this.getSortField(this.props.sort);
 
     if (tweets === undefined || tweets.length === 0) {
       return null;
     }
-
-    const sortField = this.getSortField(this.props.sort);
 
     if (sortField !== undefined) {
       tweets.sort((a, b) => this.compareTweet(a, b, sortField));
@@ -53,7 +52,7 @@ class TweetList extends Component {
 
     return (
       <Grid container spacing={40} className={classes.container}>
-        {tweets.map(tweet => this.renderTweet(tweet))}
+        {tweets.map(this.renderTweet)}
       </Grid>
     );
   }

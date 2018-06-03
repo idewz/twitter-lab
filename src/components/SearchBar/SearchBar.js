@@ -41,10 +41,7 @@ class AppSearch extends Component {
           onKeyDown={this.handleKeyDown}
           onChange={this.props.handleQueryChange}
           endAdornment={
-            <IconButton
-              aria-label="Toggle password visibility"
-              onClick={this.props.handleSearchClick}
-            >
+            <IconButton aria-label="Search" onClick={this.props.handleSearchClick}>
               <SearchIcon />
             </IconButton>
           }
