@@ -55,9 +55,16 @@ class TwitterCard extends Component {
     // decorate each tag with its link
     if (hashtags !== undefined && hashtags.length !== 0) {
       hashtags.forEach(tag => {
-        parts.push(text.slice(current, tag.indices[0]));
+        let [start, end] = tag.indices;
+
+        while (text.charAt(start) !== '#') {
+          start++;
+          end++;
+        }
+
+        parts.push(text.slice(current, start));
         parts.push(this.renderHashTag(tag.text));
-        current = tag.indices[1];
+        current = end;
       });
 
       if (current < text.length) {
