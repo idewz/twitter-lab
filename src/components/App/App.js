@@ -45,7 +45,7 @@ class App extends Component {
     }
 
     // Random a top trend
-    const randomIndex = Math.floor(Math.random() * trends.length * 0.25);
+    const randomIndex = Math.floor(Math.random() * trends.length);
     const trend = trends[randomIndex];
     this.setState({ query: trend.name }, this.performSearch);
   }

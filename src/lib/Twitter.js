@@ -28,14 +28,17 @@ class Twitter {
   }
 
   /**
-   * Get global trends
+   * Get trends in San Francisco
+   *
+   * @todo Look up WOEID dynamically
    *
    * @returns {array} Response array from /trends/place.json
    * @see {@link https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place}
    */
   static async trends() {
     try {
-      const response = await axios.get('https://twitter.siwadon.com/api/trends');
+      const params = { woeid: 2487956 };
+      const response = await axios.get('https://twitter.siwadon.com/api/trends', { params });
       return response.data;
     } catch (e) {
       console.error(e);

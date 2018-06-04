@@ -45,7 +45,7 @@ export const search = functions.https.onRequest((request, response) => {
 export const trends = functions.https.onRequest((request, response) => {
   corsHandler(request, response, () => {
     const url = '/trends/place.json';
-    const params = { id: 1 };
+    const params = { id: request.query.woeid || 1 };
 
     axios
       .get(url, { params })
