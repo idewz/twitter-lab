@@ -111,7 +111,9 @@ class App extends Component {
             </Grid>
           </Toolbar>
         </AppBar>
-        <TweetList tweets={this.state.result.statuses} sort={this.state.sort} />
+        <main>
+          <TweetList tweets={this.state.result.statuses} sort={this.state.sort} />
+        </main>
       </Fragment>
     );
   }

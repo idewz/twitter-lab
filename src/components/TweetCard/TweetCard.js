@@ -98,6 +98,7 @@ class TwitterCard extends Component {
 
     return (
       <Avatar
+        alt={this.getUser().name}
         aria-label={this.getUser().name}
         src={this.getUser().profile_image_url_https}
         className={classes.avatar}
