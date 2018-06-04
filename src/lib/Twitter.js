@@ -22,7 +22,6 @@ class Twitter {
       const response = await axios.get('https://twitter.siwadon.com/api/search', { params });
       return response.data;
     } catch (e) {
-      console.error(e);
       return {};
     }
   }
@@ -41,7 +40,6 @@ class Twitter {
       const response = await axios.get('https://twitter.siwadon.com/api/trends', { params });
       return response.data;
     } catch (e) {
-      console.error(e);
       return {};
     }
   }
