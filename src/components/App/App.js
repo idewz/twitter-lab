@@ -126,7 +126,7 @@ App.propTypes = {
 
 const styles = {
   appBar: {
-    background: yellow[500],
+    background: yellow['A700'],
   },
   title: {
     fontWeight: 'bold',
