@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -22,6 +23,8 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 
 import { BASE_URL, BASE_URL_HASHTAG, DATE_FORMAT } from '../../lib/Twitter';
 
+dayjs.extend(relativeTime);
+
 /**
  * Tweet card showing basic tweet information including
  * text, user name, time, retweet and favorite counts.
@@ -36,11 +39,11 @@ class TwitterCard extends Component {
   }
 
   formatDate(dateTime) {
-    const created_at = moment(dateTime);
-    const now = moment();
-    const duration = moment.duration(now.diff(created_at));
+    const created_at = dayjs(dateTime);
+    const now = dayjs();
+    const duration = now.diff(created_at, 'hours');
 
-    if (duration.as('hours') < 24) {
+    if (duration < 24) {
       return created_at.fromNow();
     } else {
       return created_at.format(DATE_FORMAT);
