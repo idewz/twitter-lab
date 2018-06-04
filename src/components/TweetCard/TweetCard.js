@@ -20,7 +20,7 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
-import { BASE_URL_HASHTAG, BASE_URL_STATUS, DATE_FORMAT } from '../../lib/Twitter';
+import { BASE_URL, BASE_URL_HASHTAG, DATE_FORMAT } from '../../lib/Twitter';
 
 /**
  * Tweet card showing basic tweet information including
@@ -77,6 +77,10 @@ class TwitterCard extends Component {
     return parts;
   }
 
+  getTweetUrl() {
+    return BASE_URL + this.mainTweet.user.screen_name + '/status/' + this.mainTweet.id_str;
+  }
+
   getUser() {
     return this.mainTweet.user;
   }
@@ -85,8 +89,8 @@ class TwitterCard extends Component {
     e.stopPropagation();
   }
 
-  openTweet(id) {
-    window.open(BASE_URL_STATUS + id);
+  openTweet() {
+    window.open(this.getTweetUrl());
   }
 
   renderAvatar() {
@@ -104,11 +108,10 @@ class TwitterCard extends Component {
   renderDate() {
     const { classes } = this.props;
     const created_at = this.mainTweet.created_at;
-    const tweetUrl = BASE_URL_STATUS + this.mainTweet.id_str;
     const formattedDate = this.formatDate(created_at);
 
     return (
-      <a href={tweetUrl} className={classes.subheader}>
+      <a href={this.getTweetUrl()} className={classes.subheader}>
         {formattedDate}
       </a>
     );
@@ -160,7 +163,7 @@ class TwitterCard extends Component {
             classes={{ root: classes.cardHeader, title: classes.username }}
           />
 
-          <CardContent className={classes.cardContent} onClick={() => this.openTweet(tweet.id_str)}>
+          <CardContent className={classes.cardContent} onClick={() => this.openTweet()}>
             <Typography component="p">{this.renderText()}</Typography>
           </CardContent>
 
