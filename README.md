@@ -57,3 +57,7 @@ There are 2 main parts of the app: `React app` and `Cloud Functions`.
 Cloud functions acts as a proxy to Twitter REST API. So we don't need to store our app token on the client side. Even though this causes longer wait time, I think it is acceptable (~1 second).
 
 It currently supports [standard search operators](https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators), with a minor difference. If the search query contains one or more hashtags, it will use `OR` instead of the default `AND` operator.
+
+# Acknowledgement
+
+Icon made by [Freepik](http://www.freepik.com) from [Flaticon](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
