@@ -5,8 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
 import yellow from '@material-ui/core/colors/yellow';
 
 import SearchBar from '../SearchBar';
@@ -22,6 +24,7 @@ class App extends Component {
 
     this.state = {
       count: 20,
+      loading: false,
       query: '',
       result: {},
       sort: 'Retweet',
@@ -76,8 +79,10 @@ class App extends Component {
       query = this.state.query;
     }
 
+    this.setState({ loading: true });
     const response = await Twitter.search(query, this.state.count);
     this.setState({ result: response });
+    this.setState({ loading: false });
   }
 
   handleSortChange(event) {
@@ -85,11 +90,18 @@ class App extends Component {
     this.setState({ sort });
   }
 
+  showProgressBar() {
+    return this.state.loading && Object.keys(this.state.result).length > 0;
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
       <Fragment>
+        {this.showProgressBar() && (
+          <LinearProgress classes={{ root: classes.progressRoot, bar: classes.progressBar }} />
+        )}
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <Hidden xsDown>
@@ -130,6 +142,14 @@ App.propTypes = {
 const styles = {
   appBar: {
     background: yellow['A700'],
+  },
+  progressRoot: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+  },
+  progressBar: {
+    background: yellow[900],
   },
   title: {
     fontWeight: 'bold',

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import yellow from '@material-ui/core/colors/yellow';
 
 import TweetCard from '../TweetCard/TweetCard';
 
@@ -38,12 +40,21 @@ class TweetList extends Component {
     return <TweetCard key={tweet.id_str} tweet={tweet} />;
   }
 
+  renderSpinner() {
+    const { classes } = this.props;
+    return (
+      <Grid container className={classes.spinnerContainer}>
+        <CircularProgress className={classes.spinner} size={100} />
+      </Grid>
+    );
+  }
+
   render() {
     const { classes, tweets } = this.props;
     const sortField = this.getSortField(this.props.sort);
 
     if (tweets === undefined || tweets.length === 0) {
-      return null;
+      return this.renderSpinner();
     }
 
     if (sortField !== undefined) {
@@ -84,6 +95,13 @@ const styles = theme => ({
   container: {
     marginTop: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit,
+  },
+  spinner: {
+    margin: 'auto',
+    color: yellow[900],
+  },
+  spinnerContainer: {
+    height: '100vh',
   },
 });
 
