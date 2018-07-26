@@ -1,5 +1,5 @@
 # Twitter Lab
-[![Build Status](https://travis-ci.org/idewz/twitter-lab.svg?branch=master)](https://travis-ci.org/idewz/twitter-lab)
+[![Build Status](https://travis-ci.org/siwadon/twitter-lab.svg?branch=master)](https://travis-ci.org/siwadon/twitter-lab)
 
 This reposity contains the source code behind [twitter.siwadon.com](https://twitter.siwadon.com) created with React ([`create-react-app`](https://github.com/facebook/create-react-app)) and [Material-UI](https://material-ui.com/). Currently hosted on [Firebase Hosting](https://firebase.google.com/docs/hosting/).
 
